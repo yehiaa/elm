@@ -1,0 +1,19 @@
+version: "3.2"
+services:
+  php:
+    build: './docker/php/'
+    volumes:
+      - ./moodle/:/var/www/html/moodle/
+  apache:
+    build: './docker/apache/'
+    depends_on:
+      - php
+      - mysql
+    ports:
+      - "8080:80"
+    volumes:
+      - ./moodle/:/var/www/html/moodle/
+  mysql:
+    image: mysql:5.6.40
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
